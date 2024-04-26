@@ -52,7 +52,7 @@ namespace JsonExplorer
 			}
 		}
 
-		private void TraverseJsonArray(JsonElement jsonArray, TreeNode parentNode)
+		private void TraverseJsonArray(JsonElement jsonArray, TreeNode? parentNode)
 		{
 			int index = 0;
 			foreach (var element in jsonArray.EnumerateArray())
@@ -61,12 +61,10 @@ namespace JsonExplorer
 
 				if (parentNode == null)
 				{
-					// If parentNode is null, this is the root node
 					treeView1.Nodes.Add(newNode);
 				}
 				else
 				{
-					// Otherwise, add the node to the parent node
 					parentNode.Nodes.Add(newNode);
 				}
 
@@ -112,7 +110,7 @@ namespace JsonExplorer
 					label1.Text = selectedFilePath.Substring(index);
 				}
 
-				// laad en parse de json
+				// laad, parse en verwerk 
 				try
 				{
 					using (StreamReader reader = new StreamReader(selectedFilePath))
@@ -128,7 +126,7 @@ namespace JsonExplorer
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show($"Oeps: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
 
