@@ -54,7 +54,7 @@
 			// splitContainer1.Panel2
 			// 
 			splitContainer1.Panel2.Controls.Add(treeView1);
-			splitContainer1.Size = new Size(369, 591);
+			splitContainer1.Size = new Size(355, 591);
 			splitContainer1.SplitterDistance = 81;
 			splitContainer1.TabIndex = 0;
 			// 
@@ -82,14 +82,14 @@
 			treeView1.Dock = DockStyle.Fill;
 			treeView1.Location = new Point(0, 0);
 			treeView1.Name = "treeView1";
-			treeView1.Size = new Size(369, 506);
+			treeView1.Size = new Size(355, 506);
 			treeView1.TabIndex = 0;
 			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(369, 591);
+			ClientSize = new Size(355, 591);
 			Controls.Add(splitContainer1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "Form1";
