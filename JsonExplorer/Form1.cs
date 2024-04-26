@@ -22,12 +22,10 @@ namespace JsonExplorer
 
 				if (parentNode == null)
 				{
-					// If parentNode is null, this is the root node
 					treeView1.Nodes.Add(newNode);
 				}
 				else
 				{
-					// Otherwise, add the node to the parent node
 					parentNode.Nodes.Add(newNode);
 				}
 
@@ -42,6 +40,14 @@ namespace JsonExplorer
 				else
 				{
 					newNode.Nodes.Add(property.Value.ToString());
+					if (property.Value.ToString() == "")
+					{
+						newNode.ForeColor = Color.Gray;
+					}
+					else
+					{
+						newNode.ForeColor = Color.Red;
+					}
 				}
 			}
 		}
@@ -75,7 +81,15 @@ namespace JsonExplorer
 				else
 				{
 					newNode.Nodes.Add(element.ToString());
-					newNode.ForeColor = Color.Red;
+
+					if (element.ToString() == "")
+					{
+						newNode.ForeColor = Color.Gray;
+					}
+					else
+					{
+						newNode.ForeColor = Color.Red;
+					}
 				}
 
 				index++;
@@ -86,7 +100,7 @@ namespace JsonExplorer
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Title = "Select a File";
-			openFileDialog.Filter = "JSON Files (*.json)|*.json"; 
+			openFileDialog.Filter = "JSON Files (*.json)|*.json";
 
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
@@ -118,6 +132,14 @@ namespace JsonExplorer
 				}
 			}
 
+		}
+
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node != null)
+			{
+				Clipboard.SetText(e.Node.Text);
+			}
 		}
 	}
 }
