@@ -30,11 +30,11 @@
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			splitContainer1 = new SplitContainer();
+			textBox1 = new TextBox();
+			button2 = new Button();
 			label1 = new Label();
 			button1 = new Button();
 			treeView1 = new TreeView();
-			button2 = new Button();
-			textBox1 = new TextBox();
 			((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
 			splitContainer1.Panel1.SuspendLayout();
 			splitContainer1.Panel2.SuspendLayout();
@@ -62,10 +62,29 @@
 			splitContainer1.SplitterDistance = 103;
 			splitContainer1.TabIndex = 0;
 			// 
+			// textBox1
+			// 
+			textBox1.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+			textBox1.Location = new Point(12, 41);
+			textBox1.Multiline = true;
+			textBox1.Name = "textBox1";
+			textBox1.Size = new Size(331, 23);
+			textBox1.TabIndex = 3;
+			// 
+			// button2
+			// 
+			button2.Location = new Point(12, 70);
+			button2.Name = "button2";
+			button2.Size = new Size(92, 23);
+			button2.TabIndex = 2;
+			button2.Text = "Zoek op pad";
+			button2.UseVisualStyleBackColor = true;
+			button2.Click += button2_Click;
+			// 
 			// label1
 			// 
 			label1.AutoSize = true;
-			label1.Location = new Point(93, 16);
+			label1.Location = new Point(110, 16);
 			label1.Name = "label1";
 			label1.Size = new Size(38, 15);
 			label1.TabIndex = 1;
@@ -75,7 +94,7 @@
 			// 
 			button1.Location = new Point(12, 12);
 			button1.Name = "button1";
-			button1.Size = new Size(75, 23);
+			button1.Size = new Size(92, 23);
 			button1.TabIndex = 0;
 			button1.Text = "Open json";
 			button1.UseVisualStyleBackColor = true;
@@ -90,24 +109,6 @@
 			treeView1.Size = new Size(355, 484);
 			treeView1.TabIndex = 0;
 			treeView1.AfterSelect += treeView1_AfterSelect;
-			// 
-			// button2
-			// 
-			button2.Location = new Point(12, 70);
-			button2.Name = "button2";
-			button2.Size = new Size(75, 23);
-			button2.TabIndex = 2;
-			button2.Text = "button2";
-			button2.UseVisualStyleBackColor = true;
-			button2.Click += button2_Click;
-			// 
-			// textBox1
-			// 
-			textBox1.Location = new Point(12, 41);
-			textBox1.Multiline = true;
-			textBox1.Name = "textBox1";
-			textBox1.Size = new Size(331, 23);
-			textBox1.TabIndex = 3;
 			// 
 			// Form1
 			// 

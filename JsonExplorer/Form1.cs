@@ -15,6 +15,7 @@ namespace JsonExplorer
 			label1.Text = "";
 			map = new Dictionary<string, string>();
 			map.Add("TestdataROB", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\ROB\\ROB.json");
+			map.Add("lang", "D:\\CarSys\\e2e\\cypress\\fixtures\\languages\\lang_en-GB.json");
 		}
 
 		string folderPath;
@@ -173,86 +174,40 @@ namespace JsonExplorer
 
 		private void HHHH(List<string> zoekwoorden) 
 		{
-			foreach (TreeNode nodeL1 in treeView1.Nodes)
+			void JJJJJ(TreeNode treeNode) 
 			{
-				if (zoekwoorden.Count() > 0 && nodeL1.Text.Contains(zoekwoorden[0]))
+				if (zoekwoorden.Count() > 0 && treeNode.Text == zoekwoorden[0])
 				{
-					nodeL1.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-					nodeL1.EnsureVisible(); // Scroll to the node
+					treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
+					treeNode.EnsureVisible(); // Scroll to the node
+					treeNode.Expand();
+					zoekwoorden.RemoveAt(0);
 
-					foreach (TreeNode nodeL2 in nodeL1.Nodes)
+					foreach (TreeNode nodeL2 in treeNode.Nodes)
 					{
-						if (zoekwoorden.Count() > 1 && nodeL2.Text.Contains(zoekwoorden[1]))						
-						{
-							nodeL2.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-							nodeL2.EnsureVisible(); // Scroll to the node
-
-							foreach (TreeNode nodeL3 in nodeL2.Nodes)
-							{
-								if (zoekwoorden.Count() > 2 && nodeL3.Text.Contains(zoekwoorden[2]) )
-								{
-									nodeL3.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-									nodeL3.EnsureVisible(); // Scroll to the node
-									nodeL3.Expand();
-
-									foreach (TreeNode nodeL4 in nodeL3.Nodes)
-									{
-										if (zoekwoorden.Count() > 3 && nodeL4.Text.Contains(zoekwoorden[3]))
-										{
-											nodeL4.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-											nodeL4.EnsureVisible(); // Scroll to the node
-											nodeL4.Expand();
-
-											foreach (TreeNode nodeL5 in nodeL4.Nodes)
-											{
-												if (zoekwoorden.Count() > 4 && nodeL5.Text.Contains(zoekwoorden[4]))
-												{
-													nodeL5.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-													nodeL5.EnsureVisible(); // Scroll to the node
-													nodeL5.Expand();
-
-													foreach (TreeNode nodeL6 in nodeL5.Nodes)
-													{
-														if (zoekwoorden.Count() > 5 && nodeL6.Text.Contains(zoekwoorden[5]))
-														{
-															nodeL6.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-															nodeL6.EnsureVisible(); // Scroll to the node
-															nodeL6.Expand();
-														}
-													}
-												}
-											}
-										}
-									}
-
-
-								}
-								else
-								{
-									
-								}
-							}
-
-						}
-						else
-						{
-							
-						}
+						JJJJJ(nodeL2);
 					}
 				}
 				else
 				{
-					
+
 				}
+			}
 
-				//Zoek(node.Nodes, zoekwaarde);
-
+			int tel = zoekwoorden.Count();
+			foreach (TreeNode nodeL1 in treeView1.Nodes)
+			{
+				JJJJJ(nodeL1);
 			}
 		}
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			string[] padNaarValue = textBox1.Text.Split('.');
+			treeView1.Nodes.Clear();
+
+			string tbt = textBox1.Text.Replace("['", ".").Replace("']", "");
+
+			string[] padNaarValue = tbt.Split('.');
 			
 			if (padNaarValue[0] == "this")
 			{
@@ -274,8 +229,8 @@ namespace JsonExplorer
 					MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 
-				string[] zoekWoorden = padNaarValue.Skip(2).ToArray();
-				List<string> padElementen = zoekWoorden.ToList();
+				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
+				List<string> padElementen = padNaarValueIngekort.ToList();
 
 				HHHH(padElementen);
 
