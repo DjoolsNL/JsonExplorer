@@ -1,0 +1,17 @@
+{
+	"TestdataROB" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\ROB\\ROB.json",
+	"lang" : "D:\\CarSys\\e2e\\cypress\\fixtures\\languages\\lang_en-GB.json",
+	"TestdataVehicles" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Vehicles\\Vehicles.json",
+	"TestdataDefaults" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\_Defaults\\Defaults.json",
+	"TestdataAccounts" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Accounts\\Accounts.json",
+	"TestdataWorkShop" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkShop.json",
+	"TestdataTyrechange" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Tyrechange\\Tyrechange.json",
+	"TestDataWorkOrders" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\Workshop_WorkOrders.json",
+	"TestdataSettingsAdministration" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Settings\\Administration.json",
+	"TestdataSystemSettings" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Settings\\SystemSettings.json",
+	"TestdataSettingsWorkOrderSettings" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Settings\\WorkorderSettings.json",
+	"TestdataRentalVehicles" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\RentalVehicles\\RentalVehicles.json",
+	"TestdataWizard" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Wizard\\Wizard.json",
+	"TestdataDashboard" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Dashboard\\Dashboard.json",
+	"TestdataDiary" : "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Diary\\Diary.json"
+}

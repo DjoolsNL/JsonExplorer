@@ -12,13 +12,12 @@ namespace JsonExplorer
 			InitializeComponent();
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			folderPath = Directory.GetCurrentDirectory();
-			label1.Text = "";
 			map = new Dictionary<string, string>();
-			map.Add("TestdataROB", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\ROB\\ROB.json");
-			map.Add("lang", "D:\\CarSys\\e2e\\cypress\\fixtures\\languages\\lang_en-GB.json");
-			map.Add("TestdataVehicles", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Vehicles\\Vehicles.json");
-			map.Add("TestdataDefaults", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\_Defaults\\Defaults.json");
-			//map.Add("", "D:\\CarSys\\e2e\\cypress\\fixtures\\");
+
+			string jsonString = File.ReadAllText(folderPath + "\\Paden.json");
+
+			// Deserialize json string
+			map = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
 		}
 
 		string folderPath;
@@ -37,27 +36,11 @@ namespace JsonExplorer
 				int index = selectedFilePath.IndexOf("fixtures");
 				if (index != -1)
 				{
-					label1.Text = selectedFilePath.Substring(index);
+					textBox1.Text = selectedFilePath.Substring(index);
 				}
 
 				// laad, parse en verwerk 
-				try
-				{
-					using (StreamReader reader = new StreamReader(selectedFilePath))
-					{
-						string jsonData = reader.ReadToEnd();
-						JsonDocument jsonDocument = JsonDocument.Parse(jsonData);
-
-						if (jsonDocument.RootElement.ValueKind == JsonValueKind.Object)
-						{
-							Helpers.VerwerkJsonObject(treeView1, jsonDocument.RootElement, parentNode: null);
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
+				Helpers.VerwerkJson(treeView1, selectedFilePath);
 			}
 		}
 
@@ -78,7 +61,8 @@ namespace JsonExplorer
 				// Check if the node's text contains the search text
 				if (node.Text.Contains(woord))
 				{
-					node.BackColor = System.Drawing.Color.Yellow; // Highlight the node
+					node.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+					//node.BackColor = System.Drawing.Color.Yellow; // Highlight the node
 					node.EnsureVisible(); // Scroll to the node
 					tel++;
 					Zoek(node.Nodes, woord);
@@ -99,25 +83,33 @@ namespace JsonExplorer
 			{
 				if (padelementen.Count() > 0 && treeNode.Text == padelementen[0])
 				{
-					treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
+					treeNode.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Strikeout, GraphicsUnit.Point, 0);
+					//treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
 					treeNode.EnsureVisible(); // Scroll to the node
 					treeNode.Expand();
 					padelementen.RemoveAt(0);
 
-					foreach (TreeNode nodeL2 in treeNode.Nodes)
+					foreach (TreeNode node in treeNode.Nodes)
 					{
-						Recursief(nodeL2);
+						Recursief(node);
 					}
+					Properties.Settings.Default.MaxMonthlyUse = 0;
+					Properties.Settings.Default.Save();
 				}
 			}
 
 			int tel = padelementen.Count();
-			foreach (TreeNode nodeL1 in treeView1.Nodes)
+			foreach (TreeNode node in treeView1.Nodes)
 			{
-				Recursief(nodeL1);
+				if (Properties.Settings.Default.MaxMonthlyUse == 25)
+				{
+					string tekstBoodschap = "Sorry, je kunt maar 25 keer per maand van deze functie gebruikmaken";
+					MessageBox.Show(tekstBoodschap, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					break;
+				}
+				Recursief(node);
 			}
 		}
-
 		private void button2_Click(object sender, EventArgs e)
 		{
 			treeView1.Nodes.Clear();
@@ -128,23 +120,7 @@ namespace JsonExplorer
 
 			if (padNaarValue[0] == "this")
 			{
-				try
-				{
-					using (StreamReader reader = new StreamReader(map[padNaarValue[1]]))
-					{
-						string jsonData = reader.ReadToEnd();
-						JsonDocument jsonDocument = JsonDocument.Parse(jsonData);
-
-						if (jsonDocument.RootElement.ValueKind == JsonValueKind.Object)
-						{
-							Helpers.VerwerkJsonObject(treeView1, jsonDocument.RootElement, parentNode: null);
-						}
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
+				Helpers.VerwerkJson(treeView1, map[padNaarValue[1]]);
 
 				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
 				List<string> padElementen = padNaarValueIngekort.ToList();
@@ -157,11 +133,42 @@ namespace JsonExplorer
 		{
 			textBox1.Clear();
 		}
+
+		private void button4_Click(object sender, EventArgs e)
+		{
+			Form2 form2 = new Form2();
+			form2.Show();
+		}
+
+		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			Properties.Settings.Default.Save();
+		}
+
+		public virtual void Form1_Load(object sender, EventArgs e)
+		{
+
+		}
+	}
+
+	public class Form2 : Form1
+	{
+		public Form2()
+		{
+			Load += Form2_Load;
+		}
+
+		private void Form2_Load(object sender, EventArgs e)
+		{
+			this.Size = new System.Drawing.Size(555, 555);
+			//this.Controls.
+		}
+
 	}
 
 	static class Helpers
 	{
-		public static void VerwerkJsonObject(TreeView treeview, JsonElement jsonElement, TreeNode? parentNode)
+		public static void VerwerkJsonObject(TreeView treeView, JsonElement jsonElement, TreeNode? parentNode)
 		{
 			foreach (var property in jsonElement.EnumerateObject())
 			{
@@ -169,7 +176,7 @@ namespace JsonExplorer
 
 				if (parentNode == null)
 				{
-					treeview.Nodes.Add(newNode);
+					treeView.Nodes.Add(newNode);
 				}
 				else
 				{
@@ -178,11 +185,11 @@ namespace JsonExplorer
 
 				if (property.Value.ValueKind == JsonValueKind.Object)
 				{
-					VerwerkJsonObject(treeview, property.Value, newNode);
+					VerwerkJsonObject(treeView, property.Value, newNode);
 				}
 				else if (property.Value.ValueKind == JsonValueKind.Array)
 				{
-					VerwerkJsonArray(treeview, property.Value, newNode);
+					VerwerkJsonArray(treeView, property.Value, newNode);
 				}
 				else
 				{
@@ -199,7 +206,7 @@ namespace JsonExplorer
 			}
 		}
 
-		public static void VerwerkJsonArray(TreeView treeview, JsonElement jsonArray, TreeNode? parentNode)
+		public static void VerwerkJsonArray(TreeView treeView, JsonElement jsonArray, TreeNode? parentNode)
 		{
 			int index = 0;
 			foreach (var element in jsonArray.EnumerateArray())
@@ -208,7 +215,7 @@ namespace JsonExplorer
 
 				if (parentNode == null)
 				{
-					treeview.Nodes.Add(newNode);
+					treeView.Nodes.Add(newNode);
 				}
 				else
 				{
@@ -217,11 +224,11 @@ namespace JsonExplorer
 
 				if (element.ValueKind == JsonValueKind.Object)
 				{
-					VerwerkJsonObject(treeview, element, newNode);
+					VerwerkJsonObject(treeView, element, newNode);
 				}
 				else if (element.ValueKind == JsonValueKind.Array)
 				{
-					VerwerkJsonArray(treeview, element, newNode);
+					VerwerkJsonArray(treeView, element, newNode);
 				}
 				else
 				{
@@ -238,6 +245,27 @@ namespace JsonExplorer
 				}
 
 				index++;
+			}
+		}
+
+		public static void VerwerkJson(TreeView treeView, string filePad)
+		{
+			try
+			{
+				using (StreamReader reader = new StreamReader(filePad))
+				{
+					string jsonData = reader.ReadToEnd();
+					JsonDocument jsonDocument = JsonDocument.Parse(jsonData);
+
+					if (jsonDocument.RootElement.ValueKind == JsonValueKind.Object)
+					{
+						Helpers.VerwerkJsonObject(treeView, jsonDocument.RootElement, parentNode: null);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
 

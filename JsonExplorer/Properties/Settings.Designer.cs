@@ -26,12 +26,24 @@ namespace JsonExplorer.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int Setting {
+        public int MaxMonthlyUse {
             get {
-                return ((int)(this["Setting"]));
+                return ((int)(this["MaxMonthlyUse"]));
             }
             set {
-                this["Setting"] = value;
+                this["MaxMonthlyUse"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\"\"")]
+        public string RootPath {
+            get {
+                return ((string)(this["RootPath"]));
+            }
+            set {
+                this["RootPath"] = value;
             }
         }
     }
