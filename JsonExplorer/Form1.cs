@@ -16,6 +16,9 @@ namespace JsonExplorer
 			map = new Dictionary<string, string>();
 			map.Add("TestdataROB", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\ROB\\ROB.json");
 			map.Add("lang", "D:\\CarSys\\e2e\\cypress\\fixtures\\languages\\lang_en-GB.json");
+			map.Add("TestdataVehicles", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Vehicles\\Vehicles.json");
+			map.Add("TestdataDefaults", "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\_Defaults\\Defaults.json");
+			//map.Add("", "D:\\CarSys\\e2e\\cypress\\fixtures\\");
 		}
 
 		string folderPath;
@@ -147,14 +150,13 @@ namespace JsonExplorer
 			}
 		}
 
-		//int tel = 2;
-		private void Zoek(TreeNodeCollection nodes, string woord) 
+		private void Zoek(TreeNodeCollection nodes, string woord)
 		{
 			int tel = 2;
 			foreach (TreeNode node in treeView1.Nodes)
 			{
-				
-					// Check if the node's text contains the search text
+
+				// Check if the node's text contains the search text
 				if (node.Text.Contains(woord))
 				{
 					node.BackColor = System.Drawing.Color.Yellow; // Highlight the node
@@ -167,37 +169,33 @@ namespace JsonExplorer
 					node.BackColor = treeView1.BackColor; // Reset the node's background color
 				}
 
-				
+
 
 			}
 		}
 
-		private void HHHH(List<string> zoekwoorden) 
+		private void HaalWaardeOp(List<string> padelementen)
 		{
-			void JJJJJ(TreeNode treeNode) 
+			void Recursief(TreeNode treeNode)
 			{
-				if (zoekwoorden.Count() > 0 && treeNode.Text == zoekwoorden[0])
+				if (padelementen.Count() > 0 && treeNode.Text == padelementen[0])
 				{
 					treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
 					treeNode.EnsureVisible(); // Scroll to the node
 					treeNode.Expand();
-					zoekwoorden.RemoveAt(0);
+					padelementen.RemoveAt(0);
 
 					foreach (TreeNode nodeL2 in treeNode.Nodes)
 					{
-						JJJJJ(nodeL2);
+						Recursief(nodeL2);
 					}
-				}
-				else
-				{
-
 				}
 			}
 
-			int tel = zoekwoorden.Count();
+			int tel = padelementen.Count();
 			foreach (TreeNode nodeL1 in treeView1.Nodes)
 			{
-				JJJJJ(nodeL1);
+				Recursief(nodeL1);
 			}
 		}
 
@@ -208,7 +206,7 @@ namespace JsonExplorer
 			string tbt = textBox1.Text.Replace("['", ".").Replace("']", "");
 
 			string[] padNaarValue = tbt.Split('.');
-			
+
 			if (padNaarValue[0] == "this")
 			{
 				try
@@ -232,15 +230,13 @@ namespace JsonExplorer
 				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
 				List<string> padElementen = padNaarValueIngekort.ToList();
 
-				HHHH(padElementen);
-
-				
-
-		
-
-
-
+				HaalWaardeOp(padElementen);
 			}
+		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+			textBox1.Clear();
 		}
 	}
 }

@@ -35,6 +35,7 @@
 			label1 = new Label();
 			button1 = new Button();
 			treeView1 = new TreeView();
+			button3 = new Button();
 			((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
 			splitContainer1.Panel1.SuspendLayout();
 			splitContainer1.Panel2.SuspendLayout();
@@ -50,6 +51,7 @@
 			// 
 			// splitContainer1.Panel1
 			// 
+			splitContainer1.Panel1.Controls.Add(button3);
 			splitContainer1.Panel1.Controls.Add(textBox1);
 			splitContainer1.Panel1.Controls.Add(button2);
 			splitContainer1.Panel1.Controls.Add(label1);
@@ -110,6 +112,16 @@
 			treeView1.TabIndex = 0;
 			treeView1.AfterSelect += treeView1_AfterSelect;
 			// 
+			// button3
+			// 
+			button3.Location = new Point(119, 70);
+			button3.Name = "button3";
+			button3.Size = new Size(92, 23);
+			button3.TabIndex = 4;
+			button3.Text = "Wis pad";
+			button3.UseVisualStyleBackColor = true;
+			button3.Click += button3_Click;
+			// 
 			// Form1
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
@@ -135,5 +147,6 @@
 		private TreeView treeView1;
 		private Button button2;
 		private TextBox textBox1;
+		private Button button3;
 	}
 }
