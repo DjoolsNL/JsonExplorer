@@ -24,86 +24,6 @@ namespace JsonExplorer
 		string folderPath;
 		Dictionary<string, string> map;
 
-		private void TraverseJsonObject(JsonElement jsonElement, TreeNode? parentNode)
-		{
-			foreach (var property in jsonElement.EnumerateObject())
-			{
-				TreeNode newNode = new TreeNode(property.Name);
-
-				if (parentNode == null)
-				{
-					treeView1.Nodes.Add(newNode);
-				}
-				else
-				{
-					parentNode.Nodes.Add(newNode);
-				}
-
-				if (property.Value.ValueKind == JsonValueKind.Object)
-				{
-					TraverseJsonObject(property.Value, newNode);
-				}
-				else if (property.Value.ValueKind == JsonValueKind.Array)
-				{
-					TraverseJsonArray(property.Value, newNode);
-				}
-				else
-				{
-					newNode.Nodes.Add(property.Value.ToString());
-					if (property.Value.ToString() == "")
-					{
-						newNode.ForeColor = Color.Gray;
-					}
-					else
-					{
-						newNode.ForeColor = Color.Blue;
-					}
-				}
-			}
-		}
-
-		private void TraverseJsonArray(JsonElement jsonArray, TreeNode? parentNode)
-		{
-			int index = 0;
-			foreach (var element in jsonArray.EnumerateArray())
-			{
-				TreeNode newNode = new TreeNode($"[{index}]");
-
-				if (parentNode == null)
-				{
-					treeView1.Nodes.Add(newNode);
-				}
-				else
-				{
-					parentNode.Nodes.Add(newNode);
-				}
-
-				if (element.ValueKind == JsonValueKind.Object)
-				{
-					TraverseJsonObject(element, newNode);
-				}
-				else if (element.ValueKind == JsonValueKind.Array)
-				{
-					TraverseJsonArray(element, newNode);
-				}
-				else
-				{
-					newNode.Nodes.Add(element.ToString());
-
-					if (element.ToString() == "")
-					{
-						newNode.ForeColor = Color.Gray;
-					}
-					else
-					{
-						newNode.ForeColor = Color.Blue;
-					}
-				}
-
-				index++;
-			}
-		}
-
 		private void button1_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -130,7 +50,7 @@ namespace JsonExplorer
 
 						if (jsonDocument.RootElement.ValueKind == JsonValueKind.Object)
 						{
-							TraverseJsonObject(jsonDocument.RootElement, parentNode: null);
+							Helpers.VerwerkJsonObject(treeView1, jsonDocument.RootElement, parentNode: null);
 						}
 					}
 				}
@@ -139,7 +59,6 @@ namespace JsonExplorer
 					MessageBox.Show($"{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 				}
 			}
-
 		}
 
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
@@ -218,7 +137,7 @@ namespace JsonExplorer
 
 						if (jsonDocument.RootElement.ValueKind == JsonValueKind.Object)
 						{
-							TraverseJsonObject(jsonDocument.RootElement, parentNode: null);
+							Helpers.VerwerkJsonObject(treeView1, jsonDocument.RootElement, parentNode: null);
 						}
 					}
 				}
@@ -238,5 +157,89 @@ namespace JsonExplorer
 		{
 			textBox1.Clear();
 		}
+	}
+
+	static class Helpers
+	{
+		public static void VerwerkJsonObject(TreeView treeview, JsonElement jsonElement, TreeNode? parentNode)
+		{
+			foreach (var property in jsonElement.EnumerateObject())
+			{
+				TreeNode newNode = new TreeNode(property.Name);
+
+				if (parentNode == null)
+				{
+					treeview.Nodes.Add(newNode);
+				}
+				else
+				{
+					parentNode.Nodes.Add(newNode);
+				}
+
+				if (property.Value.ValueKind == JsonValueKind.Object)
+				{
+					VerwerkJsonObject(treeview, property.Value, newNode);
+				}
+				else if (property.Value.ValueKind == JsonValueKind.Array)
+				{
+					VerwerkJsonArray(treeview, property.Value, newNode);
+				}
+				else
+				{
+					newNode.Nodes.Add(property.Value.ToString());
+					if (property.Value.ToString() == "")
+					{
+						newNode.ForeColor = Color.Gray;
+					}
+					else
+					{
+						newNode.ForeColor = Color.Blue;
+					}
+				}
+			}
+		}
+
+		public static void VerwerkJsonArray(TreeView treeview, JsonElement jsonArray, TreeNode? parentNode)
+		{
+			int index = 0;
+			foreach (var element in jsonArray.EnumerateArray())
+			{
+				TreeNode newNode = new TreeNode($"[{index}]");
+
+				if (parentNode == null)
+				{
+					treeview.Nodes.Add(newNode);
+				}
+				else
+				{
+					parentNode.Nodes.Add(newNode);
+				}
+
+				if (element.ValueKind == JsonValueKind.Object)
+				{
+					VerwerkJsonObject(treeview, element, newNode);
+				}
+				else if (element.ValueKind == JsonValueKind.Array)
+				{
+					VerwerkJsonArray(treeview, element, newNode);
+				}
+				else
+				{
+					newNode.Nodes.Add(element.ToString());
+
+					if (element.ToString() == "")
+					{
+						newNode.ForeColor = Color.Gray;
+					}
+					else
+					{
+						newNode.ForeColor = Color.Blue;
+					}
+				}
+
+				index++;
+			}
+		}
+
 	}
 }
