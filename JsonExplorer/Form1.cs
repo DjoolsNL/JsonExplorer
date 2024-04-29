@@ -106,13 +106,14 @@ namespace JsonExplorer
 			Properties.Settings.Default.Save();
 		}
 
-		private void textBox1_MouseLeave(object sender, EventArgs e)
-		{
-			if (textBox1.SelectedText != null)
-			{
-				Clipboard.SetText(textBox1.Text);
-			} 
-		}
+		// dit werkt niet. hoe het pad in textBox dat geselecteerd is in clipboard krijgen?
+		//private void textBox1_MouseLeave(object sender, EventArgs e)
+		//{
+		//	if (textBox1.SelectedText != null)
+		//	{
+		//		Clipboard.SetText(textBox1.Text);
+		//	} 
+		//}
 	}
 
 	public class Form2 : Form1
