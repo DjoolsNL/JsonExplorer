@@ -27,5 +27,5 @@
 	"TestdataWorkorderPackages": "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkOrders_Packages.json",
 	"TestdataWorkorderWorkbay": "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkOrders_Linking_Workbay_Within.json",
 	"TestdataWorkorderVehicle": "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkOrders_Linking_Vehicles_Within.json",
-	"TestdataWorkorderMechanic": "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkOrders_Linking_Mechanic_Within.json",
+	"TestdataWorkorderMechanic": "D:\\CarSys\\e2e\\cypress\\fixtures\\Testdata\\Workshop\\WorkOrders\\WorkOrders_Linking_Mechanic_Within.json"
 }
