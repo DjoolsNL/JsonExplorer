@@ -126,6 +126,7 @@
 			treeView1.Size = new Size(355, 512);
 			treeView1.TabIndex = 0;
 			treeView1.AfterSelect += treeView1_AfterSelect;
+			treeView1.NodeMouseClick += treeView1_NodeMouseClick;
 			// 
 			// Form1
 			// 

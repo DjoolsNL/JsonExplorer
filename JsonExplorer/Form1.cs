@@ -13,14 +13,14 @@ namespace JsonExplorer
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			folderPath = Directory.GetCurrentDirectory();
 			map = new Dictionary<string, string>();
-
 			string jsonString = File.ReadAllText(folderPath + "\\Paden.json");
-
 			// Deserialize json string
 			map = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+			treeView1.PathSeparator = ".";
 		}
 
 		string folderPath;
+		string fileName;
 		Dictionary<string, string> map;
 
 		private void button1_Click(object sender, EventArgs e)
@@ -31,6 +31,7 @@ namespace JsonExplorer
 
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
+				fileName = openFileDialog.FileName;
 				treeView1.Nodes.Clear();
 				string selectedFilePath = openFileDialog.FileName;
 				int index = selectedFilePath.IndexOf("fixtures");
@@ -120,6 +121,7 @@ namespace JsonExplorer
 
 			if (padNaarValue[0] == "this")
 			{
+				fileName = map[padNaarValue[1]];
 				Helpers.VerwerkJson(treeView1, map[padNaarValue[1]]);
 
 				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
@@ -138,6 +140,17 @@ namespace JsonExplorer
 		{
 			Form2 form2 = new Form2();
 			form2.Show();
+		}
+
+		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+		{
+			var mapSwitched = map.ToDictionary(x => x.Value, x => x.Key);
+			string k;
+			if (mapSwitched.ContainsKey(fileName))
+			{
+				k = mapSwitched[fileName];
+				textBox1.Text = $"this.{k}.{e.Node.FullPath}";
+			}
 		}
 
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
