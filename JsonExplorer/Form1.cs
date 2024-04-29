@@ -7,15 +7,19 @@ namespace JsonExplorer
 {
 	public partial class Form1 : Form
 	{
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		public Form1()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		{
 			InitializeComponent();
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
 			folderPath = Directory.GetCurrentDirectory();
+
+			// Dictionary met cypress aliasen en filepaden naar fixture files 
 			map = new Dictionary<string, string>();
 			string jsonString = File.ReadAllText(folderPath + "\\Paden.json");
-			// Deserialize json string
 			map = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+
 			treeView1.PathSeparator = ".";
 		}
 
@@ -23,6 +27,7 @@ namespace JsonExplorer
 		string fileName;
 		Dictionary<string, string> map;
 
+		// events
 		private void button1_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -45,72 +50,6 @@ namespace JsonExplorer
 			}
 		}
 
-		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
-		{
-			if (e.Node != null)
-			{
-				Clipboard.SetText(e.Node.Text);
-			}
-		}
-
-		private void Zoek(TreeNodeCollection nodes, string woord)
-		{
-			int tel = 2;
-			foreach (TreeNode node in treeView1.Nodes)
-			{
-
-				// Check if the node's text contains the search text
-				if (node.Text.Contains(woord))
-				{
-					node.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-					//node.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-					node.EnsureVisible(); // Scroll to the node
-					tel++;
-					Zoek(node.Nodes, woord);
-				}
-				else
-				{
-					node.BackColor = treeView1.BackColor; // Reset the node's background color
-				}
-
-
-
-			}
-		}
-
-		private void HaalWaardeOp(List<string> padelementen)
-		{
-			void Recursief(TreeNode treeNode)
-			{
-				if (padelementen.Count() > 0 && treeNode.Text == padelementen[0])
-				{
-					treeNode.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Strikeout, GraphicsUnit.Point, 0);
-					//treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
-					treeNode.EnsureVisible(); // Scroll to the node
-					treeNode.Expand();
-					padelementen.RemoveAt(0);
-
-					foreach (TreeNode node in treeNode.Nodes)
-					{
-						Recursief(node);
-					}
-					Properties.Settings.Default.MaxMonthlyUse = 0;
-					Properties.Settings.Default.Save();
-				}
-			}
-
-			int tel = padelementen.Count();
-			foreach (TreeNode node in treeView1.Nodes)
-			{
-				if (Properties.Settings.Default.MaxMonthlyUse == 25)
-				{
-					string tekstBoodschap = "Sorry, je kunt maar 25 keer per maand van deze functie gebruikmaken";
-					MessageBox.Show(tekstBoodschap, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					break;
-				}
-				Recursief(node);
-			}
-		}
 		private void button2_Click(object sender, EventArgs e)
 		{
 			treeView1.Nodes.Clear();
@@ -127,7 +66,7 @@ namespace JsonExplorer
 				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
 				List<string> padElementen = padNaarValueIngekort.ToList();
 
-				HaalWaardeOp(padElementen);
+				Helpers.HaalWaardeUitJson(padElementen, treeView1);
 			}
 		}
 
@@ -138,8 +77,17 @@ namespace JsonExplorer
 
 		private void button4_Click(object sender, EventArgs e)
 		{
+			// puntjes button ...
 			Form2 form2 = new Form2();
 			form2.Show();
+		}
+
+		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+		{
+			if (e.Node != null)
+			{
+				Clipboard.SetText(e.Node.Text);
+			}
 		}
 
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -158,9 +106,12 @@ namespace JsonExplorer
 			Properties.Settings.Default.Save();
 		}
 
-		public virtual void Form1_Load(object sender, EventArgs e)
+		private void textBox1_MouseLeave(object sender, EventArgs e)
 		{
-
+			if (textBox1.SelectedText != null)
+			{
+				Clipboard.SetText(textBox1.Text);
+			} 
 		}
 	}
 
@@ -174,9 +125,7 @@ namespace JsonExplorer
 		private void Form2_Load(object sender, EventArgs e)
 		{
 			this.Size = new System.Drawing.Size(555, 555);
-			//this.Controls.
 		}
-
 	}
 
 	static class Helpers
@@ -282,5 +231,38 @@ namespace JsonExplorer
 			}
 		}
 
+		public static void HaalWaardeUitJson(List<string> padelementen, TreeView treeView)
+		{
+			void Recursief(TreeNode treeNode) 
+			{
+				if (padelementen.Count() > 0 && treeNode.Text == padelementen[0])
+				{
+					treeNode.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Strikeout, GraphicsUnit.Point, 0);
+					//treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
+					treeNode.EnsureVisible(); // Scroll to the node
+					treeNode.Expand();
+					padelementen.RemoveAt(0);
+
+					foreach (TreeNode node in treeNode.Nodes)
+					{
+						Recursief(node);
+					}
+					Properties.Settings.Default.MaxMonthlyUse = 0;
+					Properties.Settings.Default.Save();
+				}
+			}
+
+			int tel = padelementen.Count();
+			foreach (TreeNode node in treeView.Nodes)
+			{
+				if (Properties.Settings.Default.MaxMonthlyUse == 25)
+				{
+					string tekstBoodschap = "Sorry, je kunt maar 25 keer per maand van deze functie gebruikmaken";
+					MessageBox.Show(tekstBoodschap, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					break;
+				}
+				Recursief(node);
+			}
+		}
 	}
 }

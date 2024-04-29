@@ -73,6 +73,7 @@
 			button4.Size = new Size(37, 23);
 			button4.TabIndex = 5;
 			button4.Text = ". . . ";
+			toolTip1.SetToolTip(button4, "Open een nieuwe JsonExplorer");
 			button4.UseVisualStyleBackColor = true;
 			button4.Click += button4_Click;
 			// 
@@ -94,6 +95,7 @@
 			textBox1.Name = "textBox1";
 			textBox1.Size = new Size(331, 23);
 			textBox1.TabIndex = 3;
+			textBox1.MouseLeave += textBox1_MouseLeave;
 			// 
 			// button2
 			// 
@@ -102,6 +104,7 @@
 			button2.Size = new Size(92, 23);
 			button2.TabIndex = 2;
 			button2.Text = "Zoek op pad";
+			toolTip1.SetToolTip(button2, "Geef de verwijzing (pad) uit het script in het tekstveld in.");
 			button2.UseVisualStyleBackColor = true;
 			button2.Click += button2_Click;
 			// 
@@ -117,7 +120,7 @@
 			// 
 			// treeView1
 			// 
-			treeView1.BackColor = Color.Cornsilk;
+			treeView1.BackColor = Color.WhiteSmoke;
 			treeView1.BorderStyle = BorderStyle.FixedSingle;
 			treeView1.Dock = DockStyle.Fill;
 			treeView1.LabelEdit = true;
@@ -136,9 +139,8 @@
 			Controls.Add(splitContainer1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "Form1";
-			Text = "JsonExplorer";
+			Text = "JsonExplorer - © Djools 2024";
 			FormClosing += Form1_FormClosing;
-			Load += Form1_Load;
 			splitContainer1.Panel1.ResumeLayout(false);
 			splitContainer1.Panel1.PerformLayout();
 			splitContainer1.Panel2.ResumeLayout(false);
