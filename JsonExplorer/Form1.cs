@@ -82,6 +82,15 @@ namespace JsonExplorer
 			form2.Show();
 		}
 
+		private void textBox1_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (e.KeyCode == Keys.Enter)
+			{
+				// door naar:
+				button2_Click(sender, e);
+			}
+		}
+
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (e.Node != null)
@@ -105,15 +114,6 @@ namespace JsonExplorer
 		{
 			Properties.Settings.Default.Save();
 		}
-
-		// dit werkt niet. hoe het pad in textBox dat geselecteerd is in clipboard krijgen?
-		//private void textBox1_MouseLeave(object sender, EventArgs e)
-		//{
-		//	if (textBox1.SelectedText != null)
-		//	{
-		//		Clipboard.SetText(textBox1.Text);
-		//	} 
-		//}
 	}
 
 	public class Form2 : Form1
@@ -239,7 +239,6 @@ namespace JsonExplorer
 				if (padelementen.Count() > 0 && treeNode.Text == padelementen[0])
 				{
 					treeNode.NodeFont = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Strikeout, GraphicsUnit.Point, 0);
-					//treeNode.BackColor = System.Drawing.Color.Yellow; // Highlight the node
 					treeNode.EnsureVisible(); // Scroll to the node
 					treeNode.Expand();
 					padelementen.RemoveAt(0);

@@ -95,6 +95,7 @@
 			textBox1.Name = "textBox1";
 			textBox1.Size = new Size(331, 23);
 			textBox1.TabIndex = 3;
+			textBox1.KeyDown += textBox1_KeyDown;
 			// 
 			// button2
 			// 
