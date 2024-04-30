@@ -121,6 +121,8 @@ namespace JsonExplorer
 		public Form2()
 		{
 			Load += Form2_Load;
+			// zo krijg je de buttons in panel1 vd splitcontainer:
+			////var a = this.Controls[0].Controls[1].Controls.OfType<Button>;
 		}
 
 		private void Form2_Load(object sender, EventArgs e)
