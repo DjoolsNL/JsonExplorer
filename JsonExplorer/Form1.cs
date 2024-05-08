@@ -5,27 +5,27 @@ using System.Xml.Linq;
 
 namespace JsonExplorer
 {
-	public partial class Form1 : Form
+	public partial class JsonExplorer : Form
 	{
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-		public Form1()
+		public JsonExplorer()
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 		{
 			InitializeComponent();
 			Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
-			folderPath = Directory.GetCurrentDirectory();
+			folderPad = Directory.GetCurrentDirectory();
 
 			// Dictionary met cypress aliasen en filepaden naar fixture files 
-			map = new Dictionary<string, string>();
-			string jsonString = File.ReadAllText(folderPath + "\\Paden.json");
-			map = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
+			sleutelWaarden = new Dictionary<string, string>();
+			string jsonString = File.ReadAllText(folderPad + "\\Paden.json");
+			sleutelWaarden = JsonSerializer.Deserialize<Dictionary<string, string>>(jsonString);
 
 			treeView1.PathSeparator = ".";
 		}
 
-		string folderPath;
+		string folderPad;
 		string fileName;
-		Dictionary<string, string> map;
+		Dictionary<string, string> sleutelWaarden;
 
 		// events
 		private void button1_Click(object sender, EventArgs e)
@@ -52,16 +52,14 @@ namespace JsonExplorer
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			treeView1.Nodes.Clear();
-
 			string tbt = textBox1.Text.Replace("['", ".").Replace("']", "");
 
 			string[] padNaarValue = tbt.Split('.');
 
 			if (padNaarValue[0] == "this")
 			{
-				fileName = map[padNaarValue[1]];
-				Helpers.VerwerkJson(treeView1, map[padNaarValue[1]]);
+				fileName = sleutelWaarden[padNaarValue[1]];
+				Helpers.VerwerkJson(treeView1, sleutelWaarden[padNaarValue[1]]);
 
 				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
 				List<string> padElementen = padNaarValueIngekort.ToList();
@@ -101,7 +99,7 @@ namespace JsonExplorer
 
 		private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
 		{
-			var mapSwitched = map.ToDictionary(x => x.Value, x => x.Key);
+			var mapSwitched = sleutelWaarden.ToDictionary(x => x.Value, x => x.Key);
 			string k;
 			if (mapSwitched.ContainsKey(fileName))
 			{
@@ -116,7 +114,7 @@ namespace JsonExplorer
 		}
 	}
 
-	public class Form2 : Form1
+	public class Form2 : JsonExplorer
 	{
 		public Form2()
 		{
@@ -257,12 +255,13 @@ namespace JsonExplorer
 			int tel = padelementen.Count();
 			foreach (TreeNode node in treeView.Nodes)
 			{
-				if (Properties.Settings.Default.MaxMonthlyUse == 25)
-				{
-					string tekstBoodschap = "Sorry, je kunt maar 25 keer per maand van deze functie gebruikmaken";
-					MessageBox.Show(tekstBoodschap, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					break;
-				}
+				// deze if is nog niet helemaal geimplementeerd / 
+				//if (Properties.Settings.Default.MaxMonthlyUse == 25)
+				//{
+				//	string tekstBoodschap = "Sorry, je kunt maar 25 keer per maand van deze functie gebruikmaken";
+				//	MessageBox.Show(tekstBoodschap, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				//	break;
+				//}
 				Recursief(node);
 			}
 		}
