@@ -27,68 +27,70 @@ namespace JsonExplorer
 		string fileName;
 		Dictionary<string, string> sleutelWaarden;
 
-		// events
-		private void button1_Click(object sender, EventArgs e)
-		{
-			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Title = "Select a File";
-			openFileDialog.Filter = "JSON Files (*.json)|*.json";
-
-			if (openFileDialog.ShowDialog() == DialogResult.OK)
-			{
-				fileName = openFileDialog.FileName;
-				treeView1.Nodes.Clear();
-				string selectedFilePath = openFileDialog.FileName;
-				int index = selectedFilePath.IndexOf("fixtures");
-				if (index != -1)
+		// events buttons
+		private void open_Click(object sender, EventArgs e)
 				{
-					textBox1.Text = selectedFilePath.Substring(index);
+					OpenFileDialog openFileDialog = new OpenFileDialog();
+					openFileDialog.Title = "Select a File";
+					openFileDialog.Filter = "JSON Files (*.json)|*.json";
+
+					if (openFileDialog.ShowDialog() == DialogResult.OK)
+					{
+						fileName = openFileDialog.FileName;
+						treeView1.Nodes.Clear();
+						//string selectedFilePath = openFileDialog.FileName;
+						int index = fileName.IndexOf("fixtures");
+						if (index != -1)
+						{
+							textBox1.Text = fileName.Substring(index);
+						}
+
+						// laad, parse en verwerk 
+						Helpers.VerwerkJson(treeView1, fileName);
+					}
 				}
 
-				// laad, parse en verwerk 
-				Helpers.VerwerkJson(treeView1, selectedFilePath);
-			}
-		}
+		private void zoekOpPad_Click(object sender, EventArgs e)
+				{
+					string tbt = textBox1.Text.Replace("['", ".").Replace("']", "");
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-			string tbt = textBox1.Text.Replace("['", ".").Replace("']", "");
+					string[] padNaarValue = tbt.Split('.');
 
-			string[] padNaarValue = tbt.Split('.');
+					if (padNaarValue[0] == "this")
+					{
+						fileName = sleutelWaarden[padNaarValue[1]];
+						Helpers.VerwerkJson(treeView1, sleutelWaarden[padNaarValue[1]]);
 
-			if (padNaarValue[0] == "this")
-			{
-				fileName = sleutelWaarden[padNaarValue[1]];
-				Helpers.VerwerkJson(treeView1, sleutelWaarden[padNaarValue[1]]);
+						string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
+						List<string> padElementen = padNaarValueIngekort.ToList();
 
-				string[] padNaarValueIngekort = padNaarValue.Skip(2).ToArray();
-				List<string> padElementen = padNaarValueIngekort.ToList();
+						Helpers.HaalWaardeUitJson(padElementen, treeView1);
+					}
+				}
 
-				Helpers.HaalWaardeUitJson(padElementen, treeView1);
-			}
-		}
-
-		private void button3_Click(object sender, EventArgs e)
+		private void wisPad_Click(object sender, EventArgs e)
 		{
 			textBox1.Clear();
 		}
 
-		private void button4_Click(object sender, EventArgs e)
+		private void driePuntjes_Click(object sender, EventArgs e)
 		{
 			// puntjes button ...
 			Form2 form2 = new Form2();
 			form2.Show();
 		}
 
+		// events keyboard
 		private void textBox1_KeyDown(object sender, KeyEventArgs e)
 		{
 			if (e.KeyCode == Keys.Enter)
 			{
 				// door naar:
-				button2_Click(sender, e);
+				zoekOpPad_Click(sender, e);
 			}
 		}
 
+		// events treeview
 		private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
 		{
 			if (e.Node != null)
@@ -108,10 +110,13 @@ namespace JsonExplorer
 			}
 		}
 
+		// events form
 		private void Form1_FormClosing(object sender, FormClosingEventArgs e)
 		{
 			Properties.Settings.Default.Save();
 		}
+
+
 	}
 
 	public class Form2 : JsonExplorer

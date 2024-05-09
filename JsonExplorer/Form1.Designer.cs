@@ -31,11 +31,11 @@
 			components = new System.ComponentModel.Container();
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(JsonExplorer));
 			splitContainer1 = new SplitContainer();
-			button4 = new Button();
-			button3 = new Button();
+			driePuntjes = new Button();
+			wisPad = new Button();
 			textBox1 = new TextBox();
-			button2 = new Button();
-			button1 = new Button();
+			zoekOpPad = new Button();
+			open = new Button();
 			treeView1 = new TreeView();
 			toolTip1 = new ToolTip(components);
 			((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
@@ -53,11 +53,11 @@
 			// 
 			// splitContainer1.Panel1
 			// 
-			splitContainer1.Panel1.Controls.Add(button4);
-			splitContainer1.Panel1.Controls.Add(button3);
+			splitContainer1.Panel1.Controls.Add(driePuntjes);
+			splitContainer1.Panel1.Controls.Add(wisPad);
 			splitContainer1.Panel1.Controls.Add(textBox1);
-			splitContainer1.Panel1.Controls.Add(button2);
-			splitContainer1.Panel1.Controls.Add(button1);
+			splitContainer1.Panel1.Controls.Add(zoekOpPad);
+			splitContainer1.Panel1.Controls.Add(open);
 			// 
 			// splitContainer1.Panel2
 			// 
@@ -66,26 +66,26 @@
 			splitContainer1.SplitterDistance = 75;
 			splitContainer1.TabIndex = 0;
 			// 
-			// button4
+			// driePuntjes
 			// 
-			button4.Location = new Point(306, 12);
-			button4.Name = "button4";
-			button4.Size = new Size(37, 23);
-			button4.TabIndex = 5;
-			button4.Text = ". . . ";
-			toolTip1.SetToolTip(button4, "Open een nieuwe JsonExplorer");
-			button4.UseVisualStyleBackColor = true;
-			button4.Click += button4_Click;
+			driePuntjes.Location = new Point(306, 12);
+			driePuntjes.Name = "driePuntjes";
+			driePuntjes.Size = new Size(37, 23);
+			driePuntjes.TabIndex = 5;
+			driePuntjes.Text = ". . . ";
+			toolTip1.SetToolTip(driePuntjes, "Open een nieuwe JsonExplorer");
+			driePuntjes.UseVisualStyleBackColor = true;
+			driePuntjes.Click += driePuntjes_Click;
 			// 
-			// button3
+			// wisPad
 			// 
-			button3.Location = new Point(208, 12);
-			button3.Name = "button3";
-			button3.Size = new Size(92, 23);
-			button3.TabIndex = 4;
-			button3.Text = "Wis pad";
-			button3.UseVisualStyleBackColor = true;
-			button3.Click += button3_Click;
+			wisPad.Location = new Point(208, 12);
+			wisPad.Name = "wisPad";
+			wisPad.Size = new Size(92, 23);
+			wisPad.TabIndex = 4;
+			wisPad.Text = "Wis pad";
+			wisPad.UseVisualStyleBackColor = true;
+			wisPad.Click += wisPad_Click;
 			// 
 			// textBox1
 			// 
@@ -97,26 +97,26 @@
 			textBox1.TabIndex = 3;
 			textBox1.KeyDown += textBox1_KeyDown;
 			// 
-			// button2
+			// zoekOpPad
 			// 
-			button2.Location = new Point(110, 12);
-			button2.Name = "button2";
-			button2.Size = new Size(92, 23);
-			button2.TabIndex = 2;
-			button2.Text = "Zoek op pad";
-			toolTip1.SetToolTip(button2, "Geef de verwijzing (pad) uit het script in het tekstveld in.");
-			button2.UseVisualStyleBackColor = true;
-			button2.Click += button2_Click;
+			zoekOpPad.Location = new Point(110, 12);
+			zoekOpPad.Name = "zoekOpPad";
+			zoekOpPad.Size = new Size(92, 23);
+			zoekOpPad.TabIndex = 2;
+			zoekOpPad.Text = "Zoek op pad";
+			toolTip1.SetToolTip(zoekOpPad, "Geef de verwijzing (pad) uit het script in het tekstveld in.");
+			zoekOpPad.UseVisualStyleBackColor = true;
+			zoekOpPad.Click += zoekOpPad_Click;
 			// 
-			// button1
+			// open
 			// 
-			button1.Location = new Point(12, 12);
-			button1.Name = "button1";
-			button1.Size = new Size(92, 23);
-			button1.TabIndex = 0;
-			button1.Text = "Open json";
-			button1.UseVisualStyleBackColor = true;
-			button1.Click += button1_Click;
+			open.Location = new Point(12, 12);
+			open.Name = "open";
+			open.Size = new Size(92, 23);
+			open.TabIndex = 0;
+			open.Text = "Open json";
+			open.UseVisualStyleBackColor = true;
+			open.Click += open_Click;
 			// 
 			// treeView1
 			// 
@@ -131,14 +131,14 @@
 			treeView1.AfterSelect += treeView1_AfterSelect;
 			treeView1.NodeMouseClick += treeView1_NodeMouseClick;
 			// 
-			// Form1
+			// JsonExplorer
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
 			ClientSize = new Size(355, 591);
 			Controls.Add(splitContainer1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
-			Name = "Form1";
+			Name = "JsonExplorer";
 			Text = "JsonExplorer - © Djools 2024";
 			FormClosing += Form1_FormClosing;
 			splitContainer1.Panel1.ResumeLayout(false);
@@ -152,12 +152,12 @@
 		#endregion
 
 		private SplitContainer splitContainer1;
-		private Button button1;
+		private Button open;
 		private TreeView treeView1;
-		private Button button2;
+		private Button zoekOpPad;
 		private TextBox textBox1;
-		private Button button3;
+		private Button wisPad;
 		private ToolTip toolTip1;
-		private Button button4;
+		private Button driePuntjes;
 	}
 }
