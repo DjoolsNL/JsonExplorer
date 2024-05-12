@@ -62,13 +62,13 @@
 			// splitContainer1.Panel2
 			// 
 			splitContainer1.Panel2.Controls.Add(treeView1);
-			splitContainer1.Size = new Size(355, 591);
+			splitContainer1.Size = new Size(446, 591);
 			splitContainer1.SplitterDistance = 75;
 			splitContainer1.TabIndex = 0;
 			// 
 			// driePuntjes
 			// 
-			driePuntjes.Location = new Point(306, 12);
+			driePuntjes.Location = new Point(397, 12);
 			driePuntjes.Name = "driePuntjes";
 			driePuntjes.Size = new Size(37, 23);
 			driePuntjes.TabIndex = 5;
@@ -93,7 +93,7 @@
 			textBox1.Location = new Point(12, 43);
 			textBox1.Multiline = true;
 			textBox1.Name = "textBox1";
-			textBox1.Size = new Size(331, 23);
+			textBox1.Size = new Size(422, 23);
 			textBox1.TabIndex = 3;
 			textBox1.KeyDown += textBox1_KeyDown;
 			// 
@@ -126,7 +126,7 @@
 			treeView1.LabelEdit = true;
 			treeView1.Location = new Point(0, 0);
 			treeView1.Name = "treeView1";
-			treeView1.Size = new Size(355, 512);
+			treeView1.Size = new Size(446, 512);
 			treeView1.TabIndex = 0;
 			treeView1.AfterSelect += treeView1_AfterSelect;
 			treeView1.NodeMouseClick += treeView1_NodeMouseClick;
@@ -135,7 +135,7 @@
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(355, 591);
+			ClientSize = new Size(446, 591);
 			Controls.Add(splitContainer1);
 			Icon = (Icon)resources.GetObject("$this.Icon");
 			Name = "JsonExplorer";
